@@ -1,6 +1,6 @@
 from django.test import override_settings, modify_settings
+from django.urls import reverse
 
-from django.core.urlresolvers import reverse
 from tests.test_admin import APIAuthenticatedTestCase
 
 
@@ -34,7 +34,7 @@ class APIMiddlewareTest(APIAuthenticatedTestCase):
         response = self.client.get(reverse("test-api-view"))
 
         self.assertEqual(response.status_code, 403)
-        self.assertContains(response, '403 Forbidden', status_code=403)
+        self.assertContains(response, 'Authentication credentials were not provided.', status_code=403)
 
     def test_get_api_view_unauthorized_with_special_user_agents(self):
         for agent in [
@@ -54,10 +54,10 @@ class APIMiddlewareTest(APIAuthenticatedTestCase):
         response = self.client.get(reverse("test-api-view"), **{'HTTP_USER_AGENT': 'Skor/2 tts app'})
 
         self.assertEqual(response.status_code, 403)
-        self.assertContains(response, '403 Forbidden', status_code=403)
+        self.assertContains(response, 'Authentication credentials were not provided.', status_code=403)
 
     def test_move_app_rejected_without_api_key(self):
         response = self.client.get(reverse("test-api-view"), **{'HTTP_USER_AGENT': 'Skor/9 Move Backend'})
 
         self.assertEqual(response.status_code, 403)
-        self.assertContains(response, '403 Forbidden', status_code=403)
+        self.assertContains(response, 'Authentication credentials were not provided.', status_code=403)

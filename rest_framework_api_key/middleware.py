@@ -11,6 +11,14 @@ class APIKeyMiddleware(object):
     """
     A custom middleware to provide API key validation for all requests.
     """
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        self.process_request(request)
+
+        response = self.get_response(request)
+        return response
 
     def _if_skip_api_key_check(self, request):
         if request.method == 'OPTIONS' or request.path.find('/api/') < 0 or request.path == '/redemptions/api/mobile_topup_callback/':

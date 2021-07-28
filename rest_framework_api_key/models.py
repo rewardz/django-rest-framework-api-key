@@ -24,7 +24,7 @@ class APIKey(models.Model):
 
     name = models.CharField(max_length=50, unique=True)
     key = models.CharField(max_length=40, unique=True)
-    owner = models.ForeignKey(KeyOwner, null=True)
+    owner = models.ForeignKey(KeyOwner, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name

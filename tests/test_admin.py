@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django.urls import reverse
+
 from rest_framework_api_key.models import APIKey, KeyOwner
 from rest_framework_api_key.helpers import generate_key
 
