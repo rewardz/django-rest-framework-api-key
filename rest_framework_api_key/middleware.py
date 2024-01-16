@@ -13,7 +13,7 @@ class APIKeyMiddleware(object):
     """
 
     def _if_skip_api_key_check(self, request):
-        callback_apis = ["/redemptions/api/mobile_topup_callback/", "/redemptions/api/grab_callback/"]
+        callback_apis = ["/redemptions/api/mobile_topup_callback/", "/redemptions/api/grab_api_callback/"]
         
         if request.method == 'OPTIONS' or request.path.find('/api/') < 0 or request.path in callback_apis:
             return True
