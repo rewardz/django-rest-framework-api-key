@@ -1,6 +1,10 @@
 """
 Middleware verifying every request to the server passes the API key validation.
 """
+
+from datetime import date
+
+from django.db.models import Q
 from django.core.exceptions import PermissionDenied
 
 from rest_framework_api_key.helpers import get_key_from_headers
@@ -26,7 +30,7 @@ class APIKeyMiddleware(object):
         if u_agent.startswith("ELB-HealthChecker"):
             return True
 
-        if "skor/" in u_agent.lower() and "tts app" not in u_agent.lower() and "move" not in u_agent.lower() and "myaia" not in u_agent.lower():
+        if "skor/" in u_agent.lower() and "tts app" not in u_agent.lower() and "myaia" not in u_agent.lower():
             return True
 
         return False
@@ -45,14 +49,20 @@ class APIKeyMiddleware(object):
             # for backward compatible, we don't check api_key for skor apps, but when they send in one, we find it
             api_key = get_key_from_headers(request)
             if api_key:
-                api_key_object = APIKey.objects.filter(key=api_key).first()
+                api_key_object = APIKey.objects.filter(Q(key=api_key) | Q(old_key=api_key)).first()
+                # api_key_object = APIKey.objects.filter(key=api_key).first()
                 request.api_key = api_key_object
             else:
                 request.api_key = None
         else:
             api_key = get_key_from_headers(request)
-            api_key_object = APIKey.objects.filter(key=api_key).first()
+            api_key_object = APIKey.objects.filter(Q(key=api_key) | Q(old_key=api_key)).first()
+            # api_key_object = APIKey.objects.filter(key=api_key).first()
+
             if not api_key_object or not api_key_object.is_valid(request.path):
+                raise PermissionDenied('API key missing or invalid.')
+            
+            if api_key_object.old_key_expiration_date and api_key_object.old_key_expiration_date < date.today():
                 raise PermissionDenied('API key missing or invalid.')
 
             request.api_key = api_key_object

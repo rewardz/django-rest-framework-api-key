@@ -23,8 +23,11 @@ class APIKey(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     name = models.CharField(max_length=50, unique=True)
+    old_key = models.CharField(max_length=40, unique=True)
     key = models.CharField(max_length=40, unique=True)
     owner = models.ForeignKey(KeyOwner, null=True)
+    old_key_expiration_date = models.DateField(null=True, blank=True)
+    expires_at = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -32,3 +35,23 @@ class APIKey(models.Model):
     def is_valid(self, path):
         pattern = re.compile(self.owner.path_re)
         return pattern.search(path)
+
+
+class ClientSecretKey(models.Model):
+    class Meta:
+        verbose_name_plural = "Client Secret Keys"
+        ordering = ['-created']
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    name = models.CharField(max_length=50, unique=True)
+    owner = models.ForeignKey(KeyOwner, null=True)
+    secret_key = models.CharField(max_length=250, unique=True)
+    old_secret_key = models.CharField(max_length=250, unique=True)
+    old_key_expiration_date = models.DateField(null=True, blank=True)
+    expires_at = models.DateField(null=True, blank=True)
+    
+    def __str__(self):
+        return self.name
