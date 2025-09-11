@@ -17,10 +17,10 @@ class ApiKeyAdmin(admin.ModelAdmin):
 
     actions = ["generate_new_key"]
 
-    def generate_new_key(self, request, queryset):
-        for obj in queryset:
-            key, generated_key = APIKey.objects.create_key(name=obj.name)
-            messages.success(request, f"New key for {obj.name}: {generated_key}")
+    # def generate_new_key(self, request, queryset):
+    #     for obj in queryset:
+    #         key, generated_key = APIKey.objects.create_key(name=obj.name)
+    #         messages.success(request, f"New key for {obj.name}: {generated_key}")
     # generate_new_key.short_description = "Generate new API key"
 
     def has_delete_permission(self, request, obj=None):

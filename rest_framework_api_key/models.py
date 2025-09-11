@@ -25,7 +25,7 @@ class APIKey(models.Model):
     name = models.CharField(max_length=50, unique=True)
     old_key = models.CharField(max_length=40, unique=True)
     key = models.CharField(max_length=40, unique=True)
-    owner = models.ForeignKey(KeyOwner, null=True)
+    owner = models.ForeignKey(KeyOwner, null=True, on_delete=models.SET_NULL)
     old_key_expiration_date = models.DateField(null=True, blank=True)
     expires_at = models.DateField(null=True, blank=True)
 
@@ -47,7 +47,7 @@ class ClientSecretKey(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     name = models.CharField(max_length=50, unique=True)
-    owner = models.ForeignKey(KeyOwner, null=True)
+    owner = models.ForeignKey(KeyOwner, null=True, on_delete=models.SET_NULL)
     secret_key = models.CharField(max_length=250, unique=True)
     old_secret_key = models.CharField(max_length=250, unique=True)
     old_key_expiration_date = models.DateField(null=True, blank=True)
