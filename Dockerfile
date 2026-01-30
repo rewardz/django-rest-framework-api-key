@@ -5,6 +5,9 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     DEBIAN_FRONTEND=noninteractive
 
+# Build argument with default value
+ARG REQUIREMENTS_FILE=requirements/django18/requirements-testing.txt
+
 WORKDIR /code
 
 # System deps + Python 2.7
@@ -38,9 +41,6 @@ COPY requirements/ /code/requirements/
 
 # ---------- Django image ----------
 FROM base AS django-rest-framework-api-key
-
-# Build argument with default value
-ARG REQUIREMENTS_FILE=requirements/django18/requirements-testing.txt
 
 # Install dependencies dynamically
 RUN pip install -r /code/${REQUIREMENTS_FILE}
