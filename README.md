@@ -50,6 +50,41 @@ response = requests.get(
     pip install -r requirements/requirements-testing.txt
     python runtests.py
 
+## Makefile Commands
+
+The project includes a `Makefile` to simplify testing tasks.  
+All targets are defined as `.PHONY`, so they always execute when called.
+
+### Available Commands
+
+#### `make help`
+Displays all available Makefile commands.
+
+#### `make install_django18`
+Installs test dependencies required for Django 1.8.
+
+#### `make test_with_coverage`
+Executes the test suite and shows a coverage report in the terminal.
+
+#### `make build_with_django_18`
+Builds and runs a Docker image with Django 1.8.
+
+## Running docker container in local
+
+Build image and run container to run testcases:
+
+`docker build -t django-rest-framework-api-key --build-arg REQUIREMENTS_FILE=requirements/django18/requirements-testing.txt .`
+
+`docker run -it --rm django-rest-framework-api-key`
+
+RUN below command to enter into docker shell
+
+`docker run -it --rm django-rest-framework-api-key:latest bash`
+
+Once you're inside docker shell, then Run below commands for test cases:
+
+`make test_with_coverage`
+
 
 ### Contributing
 
