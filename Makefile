@@ -27,5 +27,5 @@ build_with_django_18:
 # Start build with django version 1.11 and start container
 build_with_django_111:
 	@echo "Starting Docker build..."
-	docker build -t django-rest-framework-api-key-111 --build-arg REQUIREMENTS_FILE=requirements/django18/requirements-testing.txt .
+	docker build -t django-rest-framework-api-key-111 --build-arg REQUIREMENTS_FILE=requirements/django111/requirements-testing.txt .
 	docker run -it --rm django-rest-framework-api-key-111
