@@ -50,6 +50,24 @@ response = requests.get(
     pip install -r requirements/requirements-testing.txt
     python runtests.py
 
+## Makefile Commands
+
+The project includes a `Makefile` to simplify testing tasks.  
+All targets are defined as `.PHONY`, so they always execute when called.
+
+### Available Commands
+
+#### `make help`
+Displays all available Makefile commands.
+
+#### `make install_django18`
+Installs test dependencies required for Django 1.8.
+
+#### `make test_with_coverage`
+Executes the test suite and shows a coverage report in the terminal.
+
+#### `make build_with_django_18`
+Builds and runs a Docker image with Django 1.8.
 
 ### Contributing
 
