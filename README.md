@@ -69,6 +69,9 @@ Executes the test suite and shows a coverage report in the terminal.
 #### `make build_with_django_18`
 Builds and runs a Docker image with Django 1.8.
 
+#### `make build_with_django_111`
+Builds and runs a Docker image with Django 1.11.
+
 ### Contributing
 
 1. Fork it!
