@@ -88,6 +88,8 @@ spec:
     tags = setTags(SOURCE_BRANCH, PR_NUM)
     IMAGE_TAG_1_8 = "1-8-${tags.IMAGE_TAG}"
     IMAGE_TAG_1_11 = "1-11-${tags.IMAGE_TAG}"
+    CACHE_TAG_1_8 = 'cache-django-1-8'
+    CACHE_TAG_1_11 = 'cache-django-1-11'
     DOCKERFILE = 'Dockerfile'
   }
   stages {
@@ -136,6 +138,8 @@ spec:
                   nerdctl build \
                     --file ${DOCKERFILE} \
                     --target django-rest-framework-api-key \
+                    --cache-from type=registry,ref=${ECR_REGISTRY}/${FINAL_IMAGE}:${CACHE_TAG_1_8} \
+                    --cache-to type=registry,ref=${ECR_REGISTRY}/${FINAL_IMAGE}:${CACHE_TAG_1_8},mode=max \
                     --progress=plain -t ${ECR_REGISTRY}/${FINAL_IMAGE}:${IMAGE_TAG_1_8} .
                   nerdctl push ${ECR_REGISTRY}/${FINAL_IMAGE}:${IMAGE_TAG_1_8}
                   
@@ -170,6 +174,8 @@ spec:
                     --file ${DOCKERFILE} \
                     --target django-rest-framework-api-key \
                     --build-arg REQUIREMENTS_FILE=requirements/django111/requirements-testing.txt \
+                    --cache-from type=registry,ref=${ECR_REGISTRY}/${FINAL_IMAGE}:${CACHE_TAG_1_11} \
+                    --cache-to type=registry,ref=${ECR_REGISTRY}/${FINAL_IMAGE}:${CACHE_TAG_1_11},mode=max \
                     --progress=plain -t ${ECR_REGISTRY}/${FINAL_IMAGE}:${IMAGE_TAG_1_11} .
                   nerdctl push ${ECR_REGISTRY}/${FINAL_IMAGE}:${IMAGE_TAG_1_11}
                   
