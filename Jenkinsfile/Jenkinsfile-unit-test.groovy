@@ -129,8 +129,6 @@ spec:
 
                   cd django-rest-framework-api-key
                   
-                  ls -lah
-
                   # Set BUILDKIT_HOST for nerdctl
                   export BUILDKIT_HOST=unix:///run/buildkit/buildkitd.sock
 
@@ -164,8 +162,6 @@ spec:
 
                   cd django-rest-framework-api-key
                   
-                  ls -lah
-
                   # Set BUILDKIT_HOST for nerdctl
                   export BUILDKIT_HOST=unix:///run/buildkit/buildkitd.sock
 
