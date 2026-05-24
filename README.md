@@ -72,6 +72,9 @@ Builds and runs a Docker image with Django 1.8.
 #### `make build_with_django_111`
 Builds and runs a Docker image with Django 1.11.
 
+#### `make build_with_django_111_python_37`
+Builds and runs a Docker image with Django 1.11 and python 3.7.
+
 ### Contributing
 
 1. Fork it!
