@@ -95,7 +95,9 @@ spec:
   stages {
     stage ('init') {
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: "${env.CHANGE_BRANCH}"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'django-rest-framework-api-key']], userRemoteConfigs: [[credentialsId: 'github-app-rewardz', url: 'https://github.com/rewardz/django-rest-framework-api-key.git']]])
+        smartRetry(profile: 'infra', maxRetries: 2, backoff: 'fixed', initialDelaySeconds: 3) {
+            checkout([$class: 'GitSCM', branches: [[name: "${env.CHANGE_BRANCH}"]], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'django-rest-framework-api-key']], userRemoteConfigs: [[credentialsId: 'github-app-rewardz', url: 'https://github.com/rewardz/django-rest-framework-api-key.git']]])
+        }
         
         container('nerdctl') {
           script {
